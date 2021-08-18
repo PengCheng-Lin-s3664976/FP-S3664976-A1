@@ -112,6 +112,15 @@ public class MelbourneEatsSystem {
         return cost;
     }
 
+    public double allOrderFoodDeliveryCost() {
+        double cost = 0;
+                for (Order i : order) {
+                    cost += i.getDeliveryFee();
+                }
+
+        return cost;
+    }
+
     public double allOrderFoodDiscountsCost() {
         double cost = 0;
         for (Discount list : disFood) {

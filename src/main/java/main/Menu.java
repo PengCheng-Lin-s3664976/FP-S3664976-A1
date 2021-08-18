@@ -55,8 +55,6 @@ public class Menu {
 
     private void checkout(ArrayList<Order> orderTest) {
         System.out.println(banner + "\n" + "You have " + "ordered the following items" + "\n" + banner);
-        double deliveryFee2 = 0;
-        double allCost = 0;
         for (Order list : orderTest) {
 
             Map<String, Double> foodOder = new HashMap<>(list.getFoodList());
@@ -69,15 +67,14 @@ public class Menu {
                             + map.getKey(), map.getValue() * foodOderAmounts.get(map.getKey()).intValue());
                 }
             }
-
             System.out.printf(Format, "Delivery fee", list.getDeliveryFee());
-            deliveryFee2 += list.getDeliveryFee();
-            allCost += list.allFoodCost() + deliveryFee2;
             System.out.println(banner);
         }
         double save = melbourneEatsSystem.allOrderFoodDiscountsCost()
                 + melbourneEatsSystem.allOrderFoodDiscountsDeliveryCost();
-
+        double allCost = melbourneEatsSystem.allOrderFoodCost()
+                +melbourneEatsSystem.allOrderFoodDeliveryCost();
+            System.out.println(save);
             System.out.printf("%-31s", "Order price:");
             System.out.printf("%-31s", "$" + String.format("%.2f",
                     melbourneEatsSystem.allOrderFoodDiscountsCost()));
@@ -148,7 +145,7 @@ public class Menu {
             if (restaurantNumber > number + 1) {
                 throw new EatsException("Please select a valid menu option.");
             }
-            displayFoodAndChoose(restaurantNumber - 1, matchingList.get(restaurantNumber - 1), List);
+            displayFoodAndChoose(matchingList.get(restaurantNumber - 1), List);
         } catch (EatsException e) {
             System.out.println(e.getMessage());
         }
@@ -248,24 +245,25 @@ public class Menu {
             if (restaurantNumber > number + 1) {
                 throw new EatsException("Please select a valid menu option.");
             }
-            displayFoodAndChoose(restaurantNumber - 1, newRestaurantNameList.get(restaurantNumber - 1), restaurantNameList);
+            displayFoodAndChoose(newRestaurantNameList.get(restaurantNumber - 1), restaurantNameList);
         } catch (EatsException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void displayFoodAndChoose(int i, String name, ArrayList<MelbourneEatsPackage> restaurantList) {
+    private void displayFoodAndChoose( String name, ArrayList<MelbourneEatsPackage> restaurantList) {
         try {
 
             ArrayList<Food> foodList = new ArrayList<>();
             Map<String, Double> foodOder = new HashMap<>();
             Map<String, Double> foodOderAmounts = new HashMap<>();
-
+            double fee = 0;
             System.out.println(banner + "\n" + "Welcome to " + "> Select from " + name + " list" + "\n" + banner);
 
             //add same Restaurant food list
             for (MelbourneEatsPackage list : restaurantList) {
                 if (name.equals(list.getName())) {
+                    fee =list.getDelivery_fee();
                     foodList.addAll(list.getList());
                 }
             }
@@ -312,10 +310,10 @@ public class Menu {
             } catch (NumberFormatException e) {
                 throw new EatsException("please input int number");
             }
-
+            System.out.println(fee);
             foodOder.put(foodList.get(foodName - 1).getName(), foodList.get(foodName - 1).getPrice());
             foodOderAmounts.put(foodList.get(foodName - 1).getName(), amounts);
-            order = new Order(name, foodOder, foodOderAmounts, restaurantList.get(i).getDelivery_fee());
+            order = new Order(name, foodOder, foodOderAmounts, fee);
 
             while (true) {
                 System.out.println(banner + "\n" + "Welcome to " + "> Select from " + name + " list" + "\n" + banner);
