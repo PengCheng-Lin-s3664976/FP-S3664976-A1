@@ -11,7 +11,6 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MelbourneEatsSystemTest {
-
     MelbourneEatsSystem melbourneEatsSystem;
     Map<String, Double> foodListFalse;
     Map<String, Double> foodAmounts;
