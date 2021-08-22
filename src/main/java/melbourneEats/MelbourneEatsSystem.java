@@ -148,7 +148,7 @@ public class MelbourneEatsSystem {
                 if (split.length < 3) {
                     addDiscountDelivery(new DisDelivery(Integer.parseInt(split[0]), Integer.parseInt(split[1])));
                 } else if (split[2].isBlank()) {
-                    addDis(new Discount(Integer.parseInt(split[1]), 999, Integer.parseInt(split[4])));
+                    addDis(new Discount(Integer.parseInt(split[1]), Integer.MAX_VALUE, Integer.parseInt(split[4])));
                 } else {
                     addDis(new Discount(Integer.parseInt(split[1]), Integer.parseInt(split[2]), Integer.parseInt(split[4])));
                 }
