@@ -14,8 +14,14 @@ public class MelbourneEatsSystem {
     ArrayList<DisDelivery> disDelivery = new ArrayList<>();
 
     public MelbourneEatsSystem() {
-        readRestaurants();
-        readDiscounts();
+        if (!readDiscounts()){
+             throw new IllegalArgumentException("not read all");
+        }
+        if (!readRestaurants()){
+            throw new IllegalArgumentException("not read all");
+        }
+
+
     }
 
     public ArrayList<Order> getOrder() {
@@ -132,7 +138,7 @@ public class MelbourneEatsSystem {
     }
 
 
-    private void readDiscounts() {
+    public boolean readDiscounts() {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader("Discounts.txt"));
@@ -147,6 +153,7 @@ public class MelbourneEatsSystem {
                     addDis(new Discount(Integer.parseInt(split[1]), Integer.parseInt(split[2]), Integer.parseInt(split[4])));
                 }
             }
+            return true;
         } catch (Exception e) {
             try {
                 if (reader != null) {
@@ -156,9 +163,10 @@ public class MelbourneEatsSystem {
 
             }
         }
+        return true;
     }
 
-    private void readRestaurants() {
+    public boolean readRestaurants() {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader("Restaurants.txt"));
@@ -186,5 +194,6 @@ public class MelbourneEatsSystem {
 
             }
         }
+        return true;
     }
 }

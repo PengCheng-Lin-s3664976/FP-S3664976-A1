@@ -11,7 +11,6 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MelbourneEatsSystemTest {
-
     MelbourneEatsSystem melbourneEatsSystem;
     Map<String, Double> foodListFalse;
     Map<String, Double> foodAmounts;
@@ -31,6 +30,12 @@ class MelbourneEatsSystemTest {
         melbourneEatsSystem.addOrder
                 (new Order("Burger King",foodListFalse,foodAmounts,5.00));
         assertEquals(24,melbourneEatsSystem.allOrderFoodCost());
+    }
+
+    @Test
+    void readRestaurants_And_ReadDiscounts() {
+        assertEquals(true,melbourneEatsSystem.readDiscounts());
+        assertEquals(true,melbourneEatsSystem.readRestaurants());
     }
     @Test
     void addRestaurant() {
@@ -82,5 +87,16 @@ class MelbourneEatsSystemTest {
         melbourneEatsSystem.addOrder
                 (new Order("Burger King",foodListFalse,foodAmounts,5.00));
         assertEquals(28.8,melbourneEatsSystem.allOrderFoodDiscountsCost());
+    }
+
+    @Test
+    void allOrderFoodDeliveryCost() {
+        foodListFalse = new HashMap<>();
+        foodListFalse.put("Funky Burger",12.00);
+        foodAmounts = new HashMap<>();
+        foodAmounts.put("Funky Burger",3.00);
+        melbourneEatsSystem.addOrder
+                (new Order("Burger King",foodListFalse,foodAmounts,5.00));
+        assertEquals(5.00,melbourneEatsSystem.allOrderFoodDeliveryCost());
     }
 }
